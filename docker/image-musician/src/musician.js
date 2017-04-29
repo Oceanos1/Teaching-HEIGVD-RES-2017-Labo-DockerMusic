@@ -4,7 +4,8 @@
 var net = require('net');
 var dgram = require('dgram');
 var uuid = require('uuid/v1');
-var port = 2205;
+var PORT = 2205;
+var MULTI_CAST_ADR = "239.255.22.5"
 
 var instruments = new Map();
 	instruments.set("piano", "ti-ta-ti");
@@ -24,15 +25,15 @@ if(instruRecuSon == undefined){
 	});
 }
 
-var instrumentMessage = {"uuid":uuid(),"sound":instruRecuSon};
-var instrumentSerialise = Json.stringify(instrumentMessage);
+var instrumentMessage = {"uuid":uuid(),"instrument":instrument,"sound":instruRecuSon,"activeSince":new Date()};
+var instrumentSerialise = new Buffer(JSON.stringify(instrumentMessage));
 
 var socketUdp = dgram.createSocket('udp4');
 
 
 setInterval(function() {
-	socketUdp.send(instrumentSerialise, port, 'localhost', (err) => {
-  socketUdp.close();
-});
+	socketUdp.send(instrumentSerialise,0,instrumentSerialise.length, PORT, MULTI_CAST_ADR, (err)=> {
+			console.log("envoi de : "+ instrumentSerialise);
+		});
 },1000);
 

@@ -35,6 +35,7 @@ var musician = musicians.get(musicianUuid);
 if(musician == undefined){
 	musicians.set(musicianUuid,{
 		"instrument" : soundRecu.instrument,
+		"activeSince" : soundRecu.activeSince,
 		"timeout" : setTimeout(removeMusician,5000,musicianUuid)
 	});
 }else{
@@ -51,3 +52,19 @@ server.on('listening', () => {
 server.bind(PORT_UDP,(err) => {
 	server.addMembership(MULTI_CAST_ADR);
 });
+
+var tcpServer = net.createServer( (socket) => {
+	var allCurrentMusicians = [];
+	musicians.forEach( function(m,uuid,map) {
+		
+		allCurrentMusicians.push({
+			"uuid":uuid,
+			"instrument":m.instrument,
+			"activeSince":m.activeSince
+		});
+	});
+	socket.write(JSON.stringify(allCurrentMusicians) + "\r\n");
+	socket.end();
+});
+
+tcpServer.listen(PORT_TCP);

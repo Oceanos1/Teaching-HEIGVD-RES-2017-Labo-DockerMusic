@@ -121,15 +121,16 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic
 | ---  | ---
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**?
-| | *Enter your response here...*
+| | *La méthode stringify permet de changer une valeur javascript en chaine Json*
 |Question | What is **npm**?
-| | *Enter your response here...*
+| | *npm est le package manager de javascript*
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?
-| | *Enter your response here...*
+| | *npm install permet d'installer un package et l'option --save permet de mettre a jour les dependances dans le package.json*
 |Question | How can we use the `https://www.npmjs.com/` web site?
-| | *Enter your response here...*
+| | *On trouve des packages grace a la bar de recherche
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122?
-| | *Enter your response here...*
+| | *const uuidV1 = require('uuid/v1');
+uuidV1();*
 |Question | In Node.js, how can we execute a function on a **periodic** basis?
 | | *Enter your response here...*
 |Question | In Node.js, how can we **emit UDP datagrams**?

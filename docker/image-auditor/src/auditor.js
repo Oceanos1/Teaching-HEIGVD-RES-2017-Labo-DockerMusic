@@ -13,7 +13,8 @@ var MULTI_CAST_ADR = "239.255.22.5"
 	var musicians = new Map();
 	
 	function removeMusician(uuid){
-		musician.delete(uuid);
+		console.log("Le musicien avec l'uuid :"+uuid+" ne joue plus d'instrument.");
+		musicians.delete(uuid);
 	}
 	
 	
@@ -25,12 +26,14 @@ server.on('error', (err) => {
 });
 
 server.on('message', (msg, rinfo) => {
+console.log("Message: " + msg);
+
 var soundRecu = JSON.parse(msg);
 var musicianUuid = soundRecu.uuid;
 var musician = musicians.get(musicianUuid);
 
 if(musician == undefined){
-	musician.set(musicianUuid,{
+	musicians.set(musicianUuid,{
 		"instrument" : soundRecu.instrument,
 		"timeout" : setTimeout(removeMusician,5000,musicianUuid)
 	});
